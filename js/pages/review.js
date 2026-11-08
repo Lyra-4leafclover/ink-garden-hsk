@@ -3,8 +3,16 @@ import { getWord, loadLevel } from '../lib/data.js';
 import { playWord } from '../lib/audio.js';
 import * as store from '../lib/store.js';
 
-export async function render(main) {
-  const due = store.dueCards();
+export async function render(main, _p, q = new URLSearchParams()) {
+  const lvq = +q.get('level'), unit = q.get('unit');
+  let due = store.dueCards(), label = '';
+  if (lvq) {
+    const ws = await loadLevel(lvq);
+    const pickW = unit !== null && unit !== '' ? ws.slice(+unit * 20, +unit * 20 + 20) : ws.filter(w => due.includes(w.id));
+    if (unit !== null && unit !== '') pickW.forEach(w => store.addCard(w.id));
+    due = pickW.map(w => w.id);
+    label = unit !== null && unit !== '' ? ` · HSK ${lvq} Unit ${+unit + 1}` : ` · HSK ${lvq}`;
+  }
   const total = Object.keys(store.get().cards).length;
   const dir = store.setting('cardDir') || 'zh';
   if (!due.length) {
@@ -17,7 +25,7 @@ export async function render(main) {
   }
   const queue = shuffle(due).slice(0, 50);
   let i = 0, flipped = false, done = 0;
-  main.innerHTML = `<div class="wrap narrow"><div class="row" style="justify-content:space-between;margin:18px 0"><h1 style="margin:0">Flashcards</h1><div class="row"><div class="seg" id="dir"><button data-d="zh" class="${dir === 'zh' ? 'on' : ''}">汉字 → English</button><button data-d="en" class="${dir === 'en' ? 'on' : ''}">English → 汉字</button><button data-d="au" class="${dir === 'au' ? 'on' : ''}">Audio</button></div></div></div>
+  main.innerHTML = `<div class="wrap narrow"><div class="row" style="justify-content:space-between;margin:18px 0"><h1 style="margin:0">Flashcards<span class="muted" style="font-size:.55em">${label}</span></h1><div class="row"><div class="seg" id="dir"><button data-d="zh" class="${dir === 'zh' ? 'on' : ''}">汉字 → English</button><button data-d="en" class="${dir === 'en' ? 'on' : ''}">English → 汉字</button><button data-d="au" class="${dir === 'au' ? 'on' : ''}">Audio</button></div></div></div>
     <div class="bar" style="margin-bottom:14px"><i id="pg" style="width:0"></i></div><div id="fc"></div>
     <p class="muted small" style="text-align:center">Keyboard: Space = flip · 1 Again · 2 Hard · 3 Good · 4 Easy</p></div>`;
   const fc = main.querySelector('#fc');

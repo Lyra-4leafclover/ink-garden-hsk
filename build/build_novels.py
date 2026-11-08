@@ -21,6 +21,9 @@ for L in range(1, 7):
     for w in json.load(open(os.path.join(ROOT, 'data', f'hsk{L}.json'))):
         hsk.setdefault(w['s'], (L, w['id']))
 for w in hsk: jieba.add_word(w)
+charlv = {}
+for w, (L, _) in hsk.items():
+    for ch in w: charlv[ch] = min(charlv.get(ch, 7), L)
 
 def clean(paras):
     out = []
@@ -58,7 +61,8 @@ for nid, m in META.items():
                 freq[t] += 1
                 if t not in dic:
                     c = cedict.get(t); h = hsk.get(t)
-                    dic[t] = [py(t), c[1] if c else '', h[0] if h else 0, h[1] if h else '']
+                    diff = min(h[0] if h else 7, max(charlv.get(ch, 7) for ch in t))
+                    dic[t] = [py(t), c[1] if c else '', h[0] if h else 0, h[1] if h else '', diff]
     total = sum(freq.values()); inhsk = sum(n for t, n in freq.items() if dic[t][2])
     key = [t for t, n in freq.most_common() if (dic[t][2] == 0 or dic[t][2] >= 4) and dic[t][1] and len(t) > 1][:24]
     data = dict(id=nid, **{k: v for k, v in m.items() if k != 'file'}, paras=out, dict=dic, key=key, chars=sum(len(p) for p in paras), coverage=round(inhsk / total * 100))

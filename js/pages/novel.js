@@ -20,7 +20,7 @@ export async function render(main, [id]) {
   </div>
   <div class="wpop" id="wp" hidden></div>`;
   const rd = main.querySelector('#rd'), wp = main.querySelector('#wp');
-  const cls = (t) => { const d = n.dict[t]; if (!d) return ''; return d[2] === 0 ? 'lv7' : 'lv' + d[2]; };
+  const cls = (t) => { const d = n.dict[t]; if (!d) return ''; return 'lv' + (d[4] ?? (d[2] || 7)); };
   rd.innerHTML = n.paras.map((p, i) => `${S[i] ? `<div class="summary-box">${S[i]}</div>` : ''}<p data-i="${i}"><button class="play sm pread" data-i="${i}" aria-label="Read paragraph">${icons.play}</button>${p.map(t => isHan(t) ? `<span class="w ${cls(t)}" data-t="${esc(t)}" data-p="${esc(n.dict[t]?.[0] || '')}">${esc(t)}</span>` : esc(t)).join('')}</p>`).join('');
   const apply = () => { rd.classList.toggle('show-py', opt.py); rd.classList.toggle('hl', opt.hl); rd.classList.toggle('no-sum', !opt.sum); rd.style.setProperty('--rfs', opt.fs + 'rem'); };
   apply();

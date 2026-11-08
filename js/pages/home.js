@@ -14,7 +14,7 @@ export async function render(main) {
     ['法', 'Grammar', 'Every HSK grammar point, explained simply with examples.', '#/grammar'],
     ['句', 'Sentence building', 'Learn Chinese word order and build sentences tile by tile.', '#/sentences'],
     ['画', 'Picture scenes', 'Tap things in painted scenes to learn everyday words.', '#/scenes'],
-    ['诗', '50 classical poems', 'How to read Tang & Song poetry, with line-by-line notes.', '#/poems'],
+    ['诗', '56 classic poems', 'How to read Tang & Song poetry, with line-by-line notes.', '#/poems'],
     ['书', 'Read real novels', 'Lu Xun and Journey to the West — tap any word for help.', '#/reading'],
     ['考', 'Mock tests', '30 full mock exams per level, timed and scored like the real HSK.', '#/tests'],
     ['卡', 'Flashcards', 'Spaced repetition that shows words right before you forget them.', '#/review'],
