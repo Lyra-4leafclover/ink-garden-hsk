@@ -8,6 +8,8 @@ Stroke order · iPad tracing · native-speaker audio · grammar · picture scene
 
 Free · no account · no ads · works offline · phone, iPad and laptop
 
+**[✨ Open Ink Garden ✨](https://lyra-4leafclover.github.io/ink-garden-hsk/)**
+
 ![Ink Garden home page](docs/screenshots/home.webp)
 
 </div>
@@ -35,9 +37,8 @@ Free · no account · no ads · works offline · phone, iPad and laptop
 17. [Night mode, search & shortcuts](#17-night-mode-search--shortcuts)
 18. [A suggested daily routine](#18-a-suggested-daily-routine)
 19. [Troubleshooting](#19-troubleshooting)
-20. [Putting the site online](#20-putting-the-site-online)
-21. [For developers](#21-for-developers)
-22. [Credits & licences](#22-credits--licences)
+20. [For developers](#20-for-developers)
+21. [Credits & licences](#21-credits--licences)
 
 ---
 
@@ -444,31 +445,11 @@ Roughly how long each level takes at this pace: HSK 1 – 1 month · HSK 2 – 1
 | **My progress disappeared** | It's stored per browser and per device. Use **Export / Import** on the progress page to move it. |
 | **A character shows "stroke data unavailable"** | A very small number of rare characters (6 of ~3,950) have no stroke data. |
 | **Page looks old after an update** | Refresh the page once or twice — the offline cache updates in the background. |
-| **Opening `index.html` directly shows nothing** | The site must be served from a web address (see below), not opened as a file. |
+| **Opening `index.html` directly shows nothing** | Open the site from its web address instead of opening the file directly. |
 
 ---
 
-## 20. Putting the site online
-
-The site is plain files, so it can be hosted for free.
-
-**GitHub Pages (easiest):**
-1. On GitHub, open this repository → **Settings** (top right).
-2. Click **Pages** in the left menu.
-3. Under **Build and deployment → Branch**, choose **main** and **/(root)**, then **Save**.
-4. After a minute or two the site is live at `https://<your-username>.github.io/ink-garden-hsk/`.
-
-**Run it on your own computer:** open a terminal in this folder and run
-
-```bash
-python3 -m http.server 8000
-```
-
-then visit http://localhost:8000.
-
----
-
-## 21. For developers
+## 20. For developers
 
 Plain HTML, CSS and JavaScript modules — no framework and no build step.
 
@@ -493,11 +474,10 @@ sw.js, manifest.webmanifest   offline support + installable app
 - Progress is stored in `localStorage` under the key `inkgarden.v1`.
 - Mock tests are generated from the word lists and sentences with a fixed seed per test number, so *Test 7* is always the same test.
 - To rebuild data: `build/build_vocab.py`, `build/build_strokes.py`, `build/build_novels.py` (needs `jieba` and `pypinyin`).
-- `.nojekyll` is required for GitHub Pages because some audio files begin with `_`.
 
 ---
 
-## 22. Credits & licences
+## 21. Credits & licences
 
 - **HSK word lists** — [complete-hsk-vocabulary](https://github.com/drkameleon/complete-hsk-vocabulary) (MIT)
 - **Audio** — [audio-cmn](https://github.com/hugolpz/audio-cmn) by hugolpz and contributors (CC BY-SA); the `audio/` folder is shared under the same licence
